@@ -9,7 +9,17 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo-google-fonts/inter": "^0.2.2",
+    "@expo-google-fonts/ubuntu": "^0.2.2",
+    "@miblanchard/react-native-slider": "^2.1.0",
+    "@react-native-community/blur": "^4.2.0",
+    "@react-native-community/slider": "^4.3.1",
+    "dayjs": "^1.11.5",
     "expo": "~46.0.9",
+    "expo-app-loading": "~2.1.0",
+    "expo-blur": "~11.2.0",
+    "expo-font": "~10.2.0",
+    "expo-splash-screen": "^0.16.2",
     "expo-status-bar": "~1.4.0",
     "react": "18.0.0",
     "react-native": "0.69.5"
