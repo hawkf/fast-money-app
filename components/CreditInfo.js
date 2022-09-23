@@ -3,9 +3,9 @@ import { View, Text, StyleSheet, Image, Dimensions } from "react-native";
 import Colors from "../consts/Colors";
 import { BlurView } from "expo-blur";
 import { returnDateFormat, getDayDiference } from "../utils/utils";
-
+import PropTypes from "prop-types";
 const CreditInfoCard = ({
-  isFastMoney = true,
+  isFastMoney,
   creditAmount,
   procent,
   payAmount,
@@ -157,3 +157,11 @@ const styles = StyleSheet.create({
 });
 
 export default CreditInfoCard;
+
+CreditInfoCard.protoTypes = {
+  isFastMoney: PropTypes.bool.isRequired,
+  creditAmount: PropTypes.number.isRequired,
+  procent: PropTypes.number.isRequired,
+  payAmount: PropTypes.number.isRequired,
+  returnTerm: PropTypes.object.isRequired,
+};
