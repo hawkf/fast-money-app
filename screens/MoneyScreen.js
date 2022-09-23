@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
+  Dimensions,
 } from "react-native";
 import Header from "../components/Header";
 import CreditInfoCard from "../components/CreditInfo";
@@ -40,13 +41,11 @@ const LONG_MONEY_INITIAL_TERM_VALUES = {
   step: 14,
 };
 
-// const FAST_MONEY_VALUE_ARRAY = [400, 600, 800];
+const FAST_MONEY_VALUE_ARRAY = [400, 600, 800];
 
-// for (let i = 1000; i <= 10000; i + 500) {
-//   FAST_MONEY_VALUE_ARRAY.push(i);
-// }
-
-// console.log({ FAST_MONEY_VALUE_ARRAY });
+for (let i = 1000; i <= 10000; i = i + 500) {
+  FAST_MONEY_VALUE_ARRAY.push(i);
+}
 
 const MoneyScreen = () => {
   const [isFastMoney, setIsFastMoney] = useState(true);
@@ -68,13 +67,38 @@ const MoneyScreen = () => {
 
   const [paySum, setPaySum] = useState(0);
 
+  const windowWidth = Dimensions.get("window").width;
+  console.log({ FAST_MONEY_VALUE_ARRAY });
   const onChangeCreditAmountHandler = (value) => {
     setCreditAmountStep(
       value[0] < getMoneyCreditAmountOptions().stepSwitchValue
         ? getMoneyCreditAmountOptions().minStep
         : getMoneyCreditAmountOptions().maxStep
     );
-    setCreditAmount(value[0]);
+    if (!isFastMoney) {
+      setCreditAmount(value[0]);
+      return;
+    }
+
+    let resultValue = value[0];
+
+    FAST_MONEY_VALUE_ARRAY.forEach((item, index) => {
+      if (index === 0) {
+        return;
+      }
+      if (
+        resultValue > FAST_MONEY_VALUE_ARRAY[index - 1] &&
+        resultValue < item
+      ) {
+        resultValue = FAST_MONEY_VALUE_ARRAY[index - 1];
+      }
+
+      if (resultValue === item) {
+        resultValue = item;
+      }
+    });
+
+    setCreditAmount(resultValue);
   };
 
   const onChangeTermHandler = (days) => {
@@ -115,7 +139,7 @@ const MoneyScreen = () => {
       },
       { text: "OK", onPress: () => console.log("OK Pressed") },
     ]);
-  }, [isFastMoney, creditAmount, creditTerm]);
+  }, [isFastMoney, creditAmount, creditTerm, procent]);
 
   useEffect(() => {
     const resultProcent = (creditAmount / 100) * creditTerm;
@@ -181,12 +205,26 @@ const MoneyScreen = () => {
             </View>
           </View>
           <View style={styles.creditInfoWrapper}>
+            <View
+              style={[
+                styles.fastCardPrev,
+                { width: windowWidth * 0.021 },
+                isFastMoney ? { backgroundColor: Colors.white } : "",
+              ]}
+            />
             <CreditInfoCard
               isFastMoney={isFastMoney}
               creditAmount={creditAmount}
               procent={procent}
               payAmount={creditAmount + procent}
               returnTerm={returnTerm}
+            />
+            <View
+              style={[
+                styles.longCardPrev,
+                { width: windowWidth * 0.021 },
+                !isFastMoney ? { backgroundColor: Colors.white } : "",
+              ]}
             />
           </View>
           <View style={styles.sliderWrapper}>
@@ -302,10 +340,11 @@ const styles = StyleSheet.create({
   },
 
   creditInfoWrapper: {
-    paddingLeft: 15,
-    paddingRight: 16,
-    position: "relative",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     marginBottom: 57,
+    width: "100%",
   },
 
   confirnButtonWrapper: {
@@ -400,6 +439,20 @@ const styles = StyleSheet.create({
 
   termWrapper: {
     alignItems: "center",
+  },
+
+  longCardPrev: {
+    backgroundColor: Colors.lightGreen,
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
+    height: 154,
+  },
+
+  fastCardPrev: {
+    backgroundColor: Colors.darkBlue,
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+    height: 154,
   },
 });
 

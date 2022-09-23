@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, Dimensions } from "react-native";
 import Colors from "../consts/Colors";
 import { BlurView } from "expo-blur";
 import { returnDateFormat, getDayDiference } from "../utils/utils";
@@ -11,11 +11,13 @@ const CreditInfoCard = ({
   payAmount,
   returnTerm,
 }) => {
+  const windowWidth = Dimensions.get("window").width;
   return (
     <View
       style={[
         styles.card,
         isFastMoney ? styles.fastMoneyFon : styles.longMoneyFon,
+        { width: windowWidth * 0.917 },
       ]}
     >
       <View style={[styles.row, { marginBottom: 10 }]}>
@@ -81,7 +83,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 20 },
     shadowRadius: 10,
     elevation: 5,
-    marginBottom: 50,
   },
 
   fastMoneyFon: {
