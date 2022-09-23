@@ -13,7 +13,6 @@ export const getDayDiference = (date) => {
 };
 
 export const addDays = (days) => {
-  console.log({ days });
   let result = new Date();
   result.setDate(result.getDate() + days);
   return result;
