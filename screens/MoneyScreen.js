@@ -68,7 +68,7 @@ const MoneyScreen = () => {
   const [paySum, setPaySum] = useState(0);
 
   const windowWidth = Dimensions.get("window").width;
-  console.log({ FAST_MONEY_VALUE_ARRAY });
+
   const onChangeCreditAmountHandler = (value) => {
     setCreditAmountStep(
       value[0] < getMoneyCreditAmountOptions().stepSwitchValue
@@ -364,11 +364,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: Colors.yellow,
-    shadowOpacity: 0.25,
-    shadowOffset: { width: 0, height: 8 },
-    shadowRadius: 25,
-    elevation: 5,
+
     marginBottom: 10,
   },
 
